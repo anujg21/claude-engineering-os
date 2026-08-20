@@ -1,0 +1,30 @@
+# Personal, per-machine Claude Code configuration
+.claude/settings.local.json
+CLAUDE.local.md
+
+# Secrets. The hook blocks writing them; this stops them being committed by hand.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials.json
+
+# Build and dependency output
+node_modules/
+dist/
+build/
+target/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Tooling noise
+.DS_Store
+*.log
+coverage/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
