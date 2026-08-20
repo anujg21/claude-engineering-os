@@ -1,7 +1,7 @@
 # Security
 
 Project-specific security artifacts. The reusable control catalogue is not here: it lives
-at `.claude/skills/security-review/checklist.md`, so it loads with the review that uses it
+at `skills/security-review/checklist.md`, so it loads with the review that uses it
 and there is only one copy of it.
 
 What belongs here:

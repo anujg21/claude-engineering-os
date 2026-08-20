@@ -9,8 +9,12 @@ cd "$ROOT" || exit 1
 echo "Setting up the engineering operating system in $ROOT"
 echo
 
-chmod +x "$ROOT"/.claude/hooks/*.sh "$ROOT"/scripts/*.sh 2>/dev/null
-echo "  hooks and scripts are executable"
+chmod +x "$ROOT"/hooks/*.sh "$ROOT"/.claude/hooks/*.sh "$ROOT"/scripts/*.sh 2>/dev/null
+if ls "$ROOT"/hooks/*.sh "$ROOT"/.claude/hooks/*.sh >/dev/null 2>&1; then
+  echo "  hooks and scripts are executable"
+else
+  echo "  no hook scripts found (fine if you installed the plugin, which carries its own)"
+fi
 
 if command -v jq >/dev/null 2>&1; then
   echo "  jq found"

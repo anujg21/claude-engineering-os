@@ -52,8 +52,9 @@ Stop and get explicit human approval before any of these. Do not proceed on an a
 - `git push --force` to a shared branch, history rewrites, direct pushes to the default branch.
 - Publishing a package, or anything else that leaves the machine and cannot be recalled.
 
-Hooks block several of these mechanically. The hooks are a backstop, not the rule.
-The rule is: ask first.
+The hooks deny or prompt on some of these, but they match command text, so they miss
+tooling they do not recognise by name and a determined evasion beats them. They are a
+backstop, not the rule. The rule is: ask first.
 
 ## Lifecycle routing
 
@@ -100,6 +101,10 @@ Project-specific build and run commands belong here once this template is adopte
 real project. Keep them short and keep them accurate.
 
 ## Where things live
+
+Paths below are where these land in a project that has adopted the system. In the
+engineering-os source repository itself, skills, agents, and hooks sit at the root
+instead, because that is where the plugin loader expects them.
 
 - `.claude/rules/` standards that load automatically when you touch matching files.
 - `.claude/skills/` the procedures behind each routing table entry.

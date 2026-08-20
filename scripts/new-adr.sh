@@ -34,15 +34,36 @@ slug="$(printf '%s' "$TITLE" \
   | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//' \
   | cut -c1-60)"
 
+if [ -z "$slug" ]; then
+  echo "that title has no letters or digits in it, so there is no filename to build" >&2
+  exit 2
+fi
+
 FILE="$DIR/$num-$slug.md"
 [ -e "$FILE" ] && { echo "already exists: $FILE" >&2; exit 1; }
 
 TODAY="$(date +%Y-%m-%d)"
-sed -e "s/^number: NNNN/number: $num/" \
-    -e "s/^title: <short imperative title>/title: $TITLE/" \
-    -e "s/^date: <YYYY-MM-DD>/date: $TODAY/" \
-    -e "s/^# NNNN\. <title>/# $num. $TITLE/" \
-    "$TEMPLATE" > "$FILE"
+
+# Escape the characters that are special on the replacement side of s///.
+# Without this, a title containing "/" aborts sed (leaving a zero-byte ADR that
+# the script still reports as created) and "&" expands to the matched text.
+esc_title="$(printf '%s' "$TITLE" | sed -e 's/[\\/&]/\\&/g')"
+
+if ! sed -e "s/^number: NNNN/number: $num/" \
+         -e "s/^title: <short imperative title>/title: $esc_title/" \
+         -e "s/^date: <YYYY-MM-DD>/date: $TODAY/" \
+         -e "s/^# NNNN\. <title>/# $num. $esc_title/" \
+         "$TEMPLATE" > "$FILE"; then
+  rm -f "$FILE"
+  echo "failed to write $FILE" >&2
+  exit 1
+fi
+
+if [ ! -s "$FILE" ]; then
+  rm -f "$FILE"
+  echo "wrote an empty ADR, refusing to keep it. Check the title for unusual characters." >&2
+  exit 1
+fi
 
 if [ -f "$INDEX" ]; then
   printf '| [%s](%s-%s.md) | %s | proposed | %s |\n' \

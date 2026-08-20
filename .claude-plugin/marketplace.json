@@ -1,0 +1,23 @@
+{
+  "name": "claude-engineering-os",
+  "description": "An engineering operating system for Claude Code: phased workflow, independent review agents, and deterministic guards.",
+  "owner": {
+    "name": "Anuj Gupta",
+    "url": "https://github.com/anujg21"
+  },
+  "plugins": [
+    {
+      "name": "engineering-os",
+      "source": "./",
+      "description": "Takes a coding agent from a vague idea to production: discovery, architecture with ADRs, design, planning, verified implementation, independent code and security review, a GO/NO-GO readiness check, and gated releases.",
+      "category": "workflow",
+      "tags": [
+        "architecture",
+        "code-review",
+        "security",
+        "testing",
+        "production-readiness"
+      ]
+    }
+  ]
+}

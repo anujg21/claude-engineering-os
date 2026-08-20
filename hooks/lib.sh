@@ -50,21 +50,27 @@ sys.stdout.write(node if isinstance(node, str) else json.dumps(node))
   esac
 }
 
-# json_escape <string> -> JSON string body, newlines preserved as \n escapes
+# json_escape <string> -> JSON string body, newlines preserved as \n escapes.
+# Control characters are stripped: an unescaped one makes the whole decision
+# invalid JSON, and Claude Code then discards the verdict and runs the command.
 json_escape() {
   printf '%s' "$1" \
+    | tr -d '\000-\010\013\014\016-\037' \
     | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' -e 's/\t/\\t/g' -e 's/\r//g' \
     | awk 'BEGIN{ORS=""} {printf "%s\\n", $0}'
 }
 
-# deny <reason>     block the tool call outright
-deny() {
-  printf '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"%s"}}\n' "$(json_escape "$1")"
+# Valid permissionDecision values are allow, deny, ask, and defer. Anything else
+# fails schema validation, and a failed decision is dropped: the tool call then
+# proceeds as though the hook said nothing. Do not invent a fifth verdict here.
+_decide() { # _decide <decision> <reason>
+  printf '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"%s","permissionDecisionReason":"%s"}}\n' \
+    "$1" "$(json_escape "$2")"
   exit 0
 }
 
-# escalate <reason> hand the decision to the human
-escalate() {
-  printf '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"escalate","permissionDecisionReason":"%s"}}\n' "$(json_escape "$1")"
-  exit 0
-}
+# deny <reason>     block the tool call outright
+deny() { _decide deny "$1"; }
+
+# escalate <reason> put the decision in front of the human as a permission prompt
+escalate() { _decide ask "$1"; }

@@ -1,7 +1,7 @@
 # Architecture principles
 
 The standing position this system takes before it knows anything about your project.
-The decision framework in `.claude/skills/architecture/decision-framework.md` applies these
+The decision framework in `skills/architecture/decision-framework.md` applies these
 to a specific choice. Replace this file with your own when you have opinions that differ;
 that is the intended customization point.
 

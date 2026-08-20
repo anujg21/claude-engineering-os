@@ -2,7 +2,7 @@
 
 A repository template that gives Claude Code a working method: phases that produce
 documents, standards that load only when relevant, reviews done by an agent that did not
-write the code, and hooks that block the dangerous commands.
+write the code, and hooks that stop or prompt on the dangerous commands.
 
 Technology-agnostic. Works for a new project or an existing one.
 
@@ -14,21 +14,42 @@ down, and says work is done without checking.
 
 ## Install
 
-```bash
-git clone <this repo> my-project && cd my-project
-rm -rf .git && git init
-./scripts/setup.sh
+Inside Claude Code:
+
+```
+/plugin marketplace add anujg21/claude-engineering-os
+/plugin install engineering-os@claude-engineering-os
 ```
 
-Then do these four things before any real work:
+Then, in whichever repository you want to use it on:
 
-1. Make `scripts/verify.sh` run your actual lint, types, and tests. Everything else
-   depends on it.
-2. Put your build and run commands in `CLAUDE.md`.
-3. Add your deploy and migration tooling to `.claude/hooks/guard-commands.sh`.
-4. Start Claude Code, run `/context`, confirm CLAUDE.md and the rules loaded.
+```
+/adopt
+```
 
-New project: run `/discovery`. Existing codebase: run `/adopt`.
+`/adopt` reads the project, writes a `verify.sh` that runs your real commands, points the
+rules at your actual directories, and appends to your `CLAUDE.md` rather than replacing it.
+Add `--check` to see what it would do without writing anything.
+
+That is the whole install. The plugin is per-developer and updates when this repo does,
+which also means its hook scripts run on your machine and change when the repo changes.
+That is the normal Claude Code plugin model, but it is a trust decision worth making
+knowingly. Pin a tag, or use the committed install below, if you would rather review
+changes before they run.
+
+### If the config should live in the repo instead
+
+So that teammates get it from a clone without installing anything:
+
+```bash
+git clone https://github.com/anujg21/claude-engineering-os ~/engineering-os
+cd my-project
+~/engineering-os/install.sh          # copies the files, touches nothing you wrote
+claude
+```
+
+Then run `/adopt` to fill in the parts a copy cannot work out. `install.sh --uninstall`
+reverses it.
 
 ## The flow
 
@@ -50,16 +71,21 @@ Skip what you do not need. A one-line fix goes straight to `/implement` and `/re
 ## What is in here
 
 ```
-CLAUDE.md      standing rules, 114 lines
-.claude/
-  rules/       standards, most load only when you touch matching files
-  skills/      14 procedures, loaded when invoked
-  agents/      4 read-only reviewers
-  hooks/       session context, command guard, secret guard, formatter
-docs/          lifecycle, principles, ADRs, runbooks, project state
-templates/     11 document templates
-scripts/       verify.sh, new-adr.sh, setup.sh
+.claude-plugin/  plugin and marketplace manifests
+skills/          14 procedures, loaded when invoked
+agents/          4 read-only reviewers
+hooks/           session context, command guard, secret guard, formatter
+.claude/rules/   standards, most load only when you touch matching files
+templates/       11 document templates, plus the project settings file
+docs/            lifecycle, principles, ADRs, the guide
+scripts/         verify.sh, new-adr.sh, setup.sh
+CLAUDE.md        the standing rules a project gets, under 120 lines
+install.sh
 ```
+
+`skills/`, `agents/`, and `hooks/` sit at the root because that is where the plugin loader
+looks for them. In a project they land under `.claude/`, which is what `install.sh` and
+`/adopt` do.
 
 ## Next
 
