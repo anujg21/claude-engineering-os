@@ -3,7 +3,7 @@
 Start with [GUIDE.md](GUIDE.md) if you are here to use the system rather than to read
 about it.
 
-Knowledge lives here. Behavior lives in `.claude/skills/`. The split matters: knowledge is
+Knowledge lives here. Behavior lives in `skills/`. The split matters: knowledge is
 read on demand by whoever needs it, procedures are loaded by the agent that runs them.
 
 | Directory | Holds | Written by |
@@ -12,7 +12,7 @@ read on demand by whoever needs it, procedures are loaded by the agent that runs
 | `architecture/` | The overview, the principles, and per-feature designs. How it is built. | `/architecture`, `/design` |
 | `decisions/` | ADRs. Why it is built that way. Immutable once accepted. | `/adr` |
 | `engineering/` | The lifecycle, principles, definition of done, MCP policy, and the design notes for this system itself. | Humans, mostly |
-| `security/` | The threat model and the security posture of this system. | `/security-review` |
+| `security/` | The threat model and the security posture of this system. | `/architecture`, updated by `/security-review` |
 | `operations/` | Runbooks, incident notes, readiness reports. | `/operate`, `/production-readiness` |
 | `project/` | Current state, plans, handoffs. The long-running memory. | `/project-state`, `/plan` |
 

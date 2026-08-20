@@ -1,0 +1,21 @@
+{
+  "name": "engineering-os",
+  "displayName": "Engineering OS",
+  "description": "A phased engineering workflow for Claude Code: discovery, architecture, design, planning, implementation, independent review, and release. Ships 14 skills, 4 read-only reviewer agents, and hooks that deny destructive commands, prompt on production-touching ones, and catch common credential shapes before they are written.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Anuj Gupta",
+    "url": "https://github.com/anujg21"
+  },
+  "homepage": "https://github.com/anujg21/claude-engineering-os",
+  "repository": "https://github.com/anujg21/claude-engineering-os",
+  "license": "MIT",
+  "keywords": [
+    "workflow",
+    "architecture",
+    "code-review",
+    "security-review",
+    "production-readiness",
+    "adr"
+  ]
+}

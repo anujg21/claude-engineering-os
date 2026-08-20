@@ -2,7 +2,7 @@
 .claude/settings.local.json
 CLAUDE.local.md
 
-# Secrets. The hook blocks writing them; this stops them being committed by hand.
+# Secrets. The write hook catches common shapes; this is the backstop that matters.
 .env
 .env.*
 !.env.example

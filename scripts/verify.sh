@@ -10,18 +10,26 @@
 #   ./scripts/verify.sh            run everything
 #   ./scripts/verify.sh --quiet    only print failures (use from a Stop hook)
 #   ./scripts/verify.sh --fast     skip the slow suites
+#   ./scripts/verify.sh --hook     quiet, and exit 2 on failure so a Stop hook blocks
 
 set -uo pipefail
 
 QUIET=0
 FAST=0
+HOOK=0
 for arg in "$@"; do
   case "$arg" in
     --quiet) QUIET=1 ;;
     --fast)  FAST=1 ;;
+    --hook)  HOOK=1; QUIET=1 ;;
     *) echo "unknown option: $arg" >&2; exit 2 ;;
   esac
 done
+
+# A Stop hook only blocks the turn on exit code 2. Exit 1 is reported as an
+# error and the turn ends anyway, which would make the gate look like it works
+# while letting failing work through.
+fail_code() { [ "$HOOK" -eq 1 ] && echo 2 || echo 1; }
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT" || exit 1
@@ -51,12 +59,27 @@ run() {
 }
 
 has() { command -v "$1" >/dev/null 2>&1; }
-script_exists() { [ -f package.json ] && grep -q "\"$1\"" package.json; }
+
+# Look inside the "scripts" object, not the whole file. A top-level key with the
+# same name (electron-builder's "build", for instance) is not an npm script, and
+# running it produces a false failure that blocks every phase of this system.
+script_exists() {
+  [ -f package.json ] || return 1
+  if has jq; then
+    jq -e --arg s "$1" '.scripts[$s] // empty' package.json >/dev/null 2>&1
+  elif has python3; then
+    python3 -c 'import json,sys; sys.exit(0 if json.load(open("package.json")).get("scripts",{}).get(sys.argv[1]) else 1)' "$1" 2>/dev/null
+  else
+    sed -n '/"scripts"[[:space:]]*:/,/}/p' package.json | grep -q "\"$1\"[[:space:]]*:"
+  fi
+}
 
 # --- Project-defined entry points take precedence --------------------------------
 
 if [ -f Makefile ] && grep -qE '^(verify|check):' Makefile; then
-  target="$(grep -oE '^(verify|check)' Makefile | head -n1)"
+  # Take the target from the same match that gated this branch. Re-deriving it
+  # with a looser pattern can pick up an unrelated earlier target.
+  target="$(grep -oE '^(verify|check):' Makefile | head -n1 | tr -d ':')"
   run "make $target" make "$target"
 
 # --- Node / TypeScript -----------------------------------------------------------
@@ -65,12 +88,12 @@ elif [ -f package.json ]; then
   pm="npm"
   [ -f pnpm-lock.yaml ] && pm="pnpm"
   [ -f yarn.lock ] && pm="yarn"
-  [ -f bun.lockb ] && pm="bun"
+  [ -f bun.lockb ] && pm="bun run"
 
-  script_exists "lint"      && run "lint" "$pm" run lint
-  script_exists "typecheck" && run "typecheck" "$pm" run typecheck
-  script_exists "build"     && [ "$FAST" -eq 0 ] && run "build" "$pm" run build
-  script_exists "test"      && run "test" "$pm" test
+  script_exists "lint"      && run "lint" $pm run lint
+  script_exists "typecheck" && run "typecheck" $pm run typecheck
+  script_exists "build"     && [ "$FAST" -eq 0 ] && run "build" $pm run build
+  script_exists "test"      && run "test" $pm test
 
 # --- Python ----------------------------------------------------------------------
 
@@ -107,7 +130,7 @@ fi
 
 if [ ${#FAILED[@]} -gt 0 ]; then
   printf '\nverify.sh: %d check(s) failed: %s\n' "${#FAILED[@]}" "${FAILED[*]}" >&2
-  exit 1
+  exit "$(fail_code)"
 fi
 
 say ""

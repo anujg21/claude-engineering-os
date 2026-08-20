@@ -40,10 +40,10 @@ Anything that must happen every time is a hook.
 | --- | --- | --- |
 | Rules that apply to every session | `CLAUDE.md` | Always, under 200 lines |
 | Standards for a kind of file | `.claude/rules/*.md` with `paths:` | When Claude touches matching files |
-| Procedures | `.claude/skills/*/SKILL.md` | When invoked, by you or by Claude |
+| Procedures | `skills/*/SKILL.md` | When invoked, by you or by Claude |
 | Long checklists and reference tables | Files beside the SKILL.md | When the skill decides to read them |
-| Independent review personas | `.claude/agents/*.md` | In a separate context, on delegation |
-| Non-negotiable enforcement | `.claude/hooks/` | Automatically, at lifecycle events |
+| Independent review personas | `agents/*.md` | In a separate context, on delegation |
+| Non-negotiable enforcement | `hooks/` | Automatically, at lifecycle events |
 | Knowledge for humans | `docs/` | On demand |
 | Current status | `docs/project/STATE.md` | Injected at session start by a hook |
 | Document shapes | `templates/` | When a skill fills one in |
@@ -59,7 +59,8 @@ real production codebase, not how popular the repository is.
 
 **Anthropic Claude Code documentation and the `anthropics/skills` repository.** The
 authoritative source for what the platform actually does: skill frontmatter and the
-1,536-character description budget, `.claude/rules/` with path scoping, subagent context
+1,536-character budget shared by `description` and `when_to_use`, `.claude/rules/` with
+path scoping, subagent context
 semantics, the full hook event and decision model, and the guidance to keep CLAUDE.md short
 and verifiable. Adopted directly, including the "would removing this cause a mistake?" test
 for every line of CLAUDE.md and the adversarial review step for finished work.
@@ -130,7 +131,7 @@ is a skill.
 **A router or orchestrator skill.** An extra hop that costs tokens and adds a place for
 instructions to conflict. The routing table in CLAUDE.md does the same job in twenty lines.
 
-**A skill per phase.** Seventeen phases, fourteen skills. Discovery covers phases 0 to 2
+**A skill per phase.** Eighteen phases, fourteen skills. Discovery covers phases 0 to 2
 because they are one conversation. Implementation covers 7 and 8 because writing the test
 is part of writing the code. Production readiness covers 12 to 14 because they share a
 checklist and a verdict.

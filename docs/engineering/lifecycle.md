@@ -1,6 +1,7 @@
 # The lifecycle
 
-Seventeen phases from an idea to a system running in production and being changed safely.
+Eighteen phases, numbered 0 to 17, from an idea to a system running in production and
+being changed safely.
 This is the reference. The routing table in CLAUDE.md is the short version.
 
 Phases are a sequence, not a ceremony. Skip what a change does not need, and say which
@@ -107,7 +108,7 @@ riskiest work is first. Rollback and out-of-scope are written down.
 **Purpose** Confidence that survives the next change.
 **Input** The implementation and the design's test approach.
 **Output** Tests at the right levels, running in the pipeline.
-**Owner** `/implement`, guided by `.claude/skills/implement/testing-strategy.md`.
+**Owner** `/implement`, guided by `skills/implement/testing-strategy.md`.
 **Validation** Behavior is tested, not implementation. Every named edge case is covered.
 Every bug fix has a regression test. Nothing is skipped, sleeping, or order-dependent.
 **Exit** `./scripts/verify.sh` passes and the suite is deterministic.

@@ -3,11 +3,25 @@
 How to use this repo day to day. For the full phase spec see
 [lifecycle.md](engineering/lifecycle.md).
 
+## Getting it
+
+```
+/plugin marketplace add anujg21/claude-engineering-os
+/plugin install engineering-os@claude-engineering-os
+```
+
+Then `/adopt` in any repository. It surveys the project first and reports before it writes,
+so run it with `--check` if you want to see the plan without the changes.
+
+The one thing to look at afterwards is `scripts/verify.sh`. `/adopt` writes it from the
+commands it found in your project, but you know whether those are the right ones. Every
+other part of this system treats a passing run as the definition of done.
+
 ## The idea in one paragraph
 
 Claude reads `CLAUDE.md` every session, so it stays short. Standards sit in
 `.claude/rules/` with path globs and only load when Claude opens a matching file.
-Procedures sit in `.claude/skills/` and load when invoked. Reviews run in a separate
+Procedures sit in `skills/` and load when invoked. Reviews run in a separate
 agent that never saw the code being written. Hooks handle the things that cannot depend
 on Claude remembering.
 
