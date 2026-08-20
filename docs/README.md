@@ -1,5 +1,8 @@
 # Documentation
 
+Start with [GUIDE.md](GUIDE.md) if you are here to use the system rather than to read
+about it.
+
 Knowledge lives here. Behavior lives in `.claude/skills/`. The split matters: knowledge is
 read on demand by whoever needs it, procedures are loaded by the agent that runs them.
 
