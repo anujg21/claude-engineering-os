@@ -57,6 +57,6 @@ rules files scoped to those paths.
 ## Git
 
 - One logical change per commit. Commit messages say what changed and why, in the
-  imperative mood.
+  imperative mood. Extremely concise; grammar loses to concision.
 - Never commit generated files, secrets, or large binaries.
 - Rebase your own branch freely, never rewrite shared history.
