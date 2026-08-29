@@ -60,6 +60,7 @@ backstop, not the rule. The rule is: ask first.
 
 | Goal | Use | Produces |
 | --- | --- | --- |
+| Not sure which of these fits what you need | `/guide` | a pointed recommendation |
 | Turn a rough idea into a product brief and requirements | `/discovery` | `docs/product/` |
 | Choose an architecture and record why | `/architecture` | `docs/architecture/overview.md`, ADRs |
 | Record one decision | `/adr` | `docs/decisions/NNNN-*.md` |

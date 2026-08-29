@@ -111,7 +111,8 @@ left alone, and what needs a human decision. Then the two things that matter:
 
 1. The verify command, and whether it passes right now.
 2. What to do next. `/discovery` for a new feature, or just keep working and let the rules
-   and guards do their job.
+   and guards do their job. If they are not sure which of those fits, point them at
+   `/guide`.
 
 Offer to revert. Everything you did is additive except the appends, so it is one
 `git checkout` of the named files plus deleting the new paths.

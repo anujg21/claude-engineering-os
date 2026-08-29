@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-08-20
+Last updated: 2026-08-29
 
 Replace this content the moment a real project starts. Right now it describes the system
 itself, which is the only honest thing it can say.
@@ -18,6 +18,7 @@ want to use it on.
 
 | Date | What | Evidence |
 | --- | --- | --- |
+| 2026-08-29 | Added a `/guide` skill: reads `docs/project/STATE.md`, interviews the user in one short round, and routes them to the right skill instead of leaving them to read the lifecycle doc. Wired into `CLAUDE.md`'s routing table, `README.md`, `docs/GUIDE.md`, and `/adopt`'s final report. | `skills/guide/SKILL.md` |
 | 2026-08-20 | Fixed every blocking finding from the internal review pass: the `escalate` verdict, uninstall data loss, secret-scanner recall, and the `rm -rf` deny gaps. | Commit history |
 | 2026-08-20 | Packaged as a Claude Code plugin: two-command install, `/adopt` performs the setup instead of describing it, `install.sh` for the committed path. | `claude plugin details engineering-os` reports 14 skills, 4 agents, 2 hook events |
 | 2026-08-19 | System scaffolded: 14 skills, 4 reviewer agents, 6 path-scoped rule sets, 4 hooks, 11 templates, lifecycle documentation. | This repository |
