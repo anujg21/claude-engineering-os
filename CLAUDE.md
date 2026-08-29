@@ -4,6 +4,11 @@ This repository runs a phase-based engineering workflow. Procedures live in skil
 standards live in `.claude/rules/`, decisions and state live in `docs/`.
 This file holds only the rules that apply to every session.
 
+## Communication style
+
+- Be extremely concise in all interactions and commit messages. Sacrifice grammar for
+  concision. Drop filler words, articles, and full sentences where meaning still lands.
+
 ## Start of every session
 
 1. Read `docs/project/STATE.md`. It is the source of truth for what is in progress,
