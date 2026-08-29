@@ -31,6 +31,9 @@ Then, in whichever repository you want to use it on:
 rules at your actual directories, and appends to your `CLAUDE.md` rather than replacing it.
 Add `--check` to see what it would do without writing anything.
 
+Not sure what to run next? `/guide` asks a couple of questions about what you are trying
+to do and points you at the one command that fits.
+
 That is the whole install. The plugin is per-developer and updates when this repo does,
 which also means its hook scripts run on your machine and change when the repo changes.
 That is the normal Claude Code plugin model, but it is a trust decision worth making
@@ -72,7 +75,7 @@ Skip what you do not need. A one-line fix goes straight to `/implement` and `/re
 
 ```
 .claude-plugin/  plugin and marketplace manifests
-skills/          14 procedures, loaded when invoked
+skills/          15 procedures, loaded when invoked
 agents/          4 read-only reviewers
 hooks/           session context, command guard, secret guard, formatter
 .claude/rules/   standards, most load only when you touch matching files

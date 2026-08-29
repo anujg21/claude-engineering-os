@@ -17,6 +17,11 @@ The one thing to look at afterwards is `scripts/verify.sh`. `/adopt` writes it f
 commands it found in your project, but you know whether those are the right ones. Every
 other part of this system treats a passing run as the definition of done.
 
+Not sure which skill to reach for next? Run `/guide`. Tell it what you are trying to do
+in a sentence, it checks `docs/project/STATE.md`, asks one short round of questions if it
+needs to, and names the exact command to run and why. It routes, it does not do the work,
+so it hands you off rather than taking over.
+
 ## The idea in one paragraph
 
 Claude reads `CLAUDE.md` every session, so it stays short. Standards sit in
