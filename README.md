@@ -57,6 +57,7 @@ reverses it.
 ## The flow
 
 ```
+/guide       not sure which of these fits, ask it and it points you at one
 /discovery   idea to brief and requirements
 /architecture  shape it, write the ADRs, get it reviewed      <- you approve
 /design      contract, data, failure modes, per feature
