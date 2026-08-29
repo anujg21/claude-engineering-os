@@ -2,7 +2,7 @@
   "name": "engineering-os",
   "displayName": "Engineering OS",
   "description": "A phased engineering workflow for Claude Code: discovery, architecture, design, planning, implementation, independent review, and release. Ships 15 skills, including one that recommends the right one, 4 read-only reviewer agents, and hooks that deny destructive commands, prompt on production-touching ones, and catch common credential shapes before they are written.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": {
     "name": "Anuj Gupta",
     "url": "https://github.com/anujg21"
