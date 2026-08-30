@@ -45,6 +45,37 @@ Gather all of this before writing. Report it, then write.
 - **Existing agent instructions.** `AGENTS.md`, `agent.md`, `.cursorrules`, or similar. If
   one is cited as a source of truth, the system defers to it and must say so.
 
+## 3a. External tooling
+
+Before writing anything, learn what the team runs outside git — a ticket tracker, a wiki,
+a chat tool — so the rest of the system can point at it correctly instead of assuming
+git is the only system in play.
+
+- **Scan for signals first.** Commit messages matching `[A-Z]{2,}-\d+` (Jira/Linear
+  keys), env var names like `SLACK_WEBHOOK*`, `CONFLUENCE_*`, `JIRA_*`, `TEAMS_WEBHOOK*`
+  in `.env.example` or CI config, and any servers already declared in `.mcp.json`. Use
+  what you find as suggested defaults in the question below, never as a silent answer —
+  repo evidence can be stale or wrong.
+- **Ask one question**, multiSelect, escape hatch first:
+  `["None — just git", "Jira/Linear (tickets)", "Confluence/Notion (docs)", "Slack/Teams (chat)", "Separate ADR tool"]`
+- **"None — just git" is a hard stop.** Write nothing for this step, add nothing to the
+  step 6 report. Never scaffold anything on the no-tools path, the same way you never
+  overwrite a file the user wrote.
+- **For each tool selected**, ask one follow-up covering direction (repo stays source of
+  truth with a one-way mirror out / repo reads it read-only / not connected, just
+  referenced by URL) and mechanism (CLI / MCP server / manual / none yet). Offer a CLI
+  first wherever one exists for that tool (e.g. `acli` covers Jira, Confluence, and
+  Bitbucket) — an MCP server's tool schema costs context on every turn whether it's used
+  or not, a CLI invoked through Bash costs nothing until called. Reserve MCP for cases a
+  CLI can't cover: a session doing enough back-and-forth that Bash round-trips are the
+  bottleneck, or a per-user OAuth audit trail a shared CLI credential can't give.
+- **Never write `.mcp.json` or touch credentials here.** That is a separate,
+  human-approved step per `docs/engineering/mcp.md` and the CLAUDE.md approval gate on
+  third-party vendors and credentials. This step records intent; mcp.md covers mechanism.
+- If at least one tool was selected, write `docs/project/integrations.md` from
+  `templates/integrations.md`, filled with what was selected. If "None — just git" was
+  chosen, do not create this file.
+
 ## 3. Write the verify script
 
 This is the most important file you will write, and the one thing you must not leave
@@ -107,7 +138,8 @@ Then run it and show the user the output.
 ## 6. Report
 
 Tell the user, in this order: what you wrote, what you merged into, what you deliberately
-left alone, and what needs a human decision. Then the two things that matter:
+left alone, and what needs a human decision. If `docs/project/integrations.md` was
+written, name it and what it records. Then the two things that matter:
 
 1. The verify command, and whether it passes right now.
 2. What to do next. `/discovery` for a new feature, or just keep working and let the rules
@@ -126,3 +158,6 @@ Offer to revert. Everything you did is additive except the appends, so it is one
 - Do not enable an autoformatter the project has not configured.
 - Do not create documentation for its own sake. Empty directories with README files
   explaining what would go in them are noise.
+- Do not write `.mcp.json` or any credential during the external-tooling step. Record
+  intent in `docs/project/integrations.md` only; live access is a separate, human-run
+  step per `docs/engineering/mcp.md`.
