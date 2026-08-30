@@ -122,4 +122,6 @@ instead, because that is where the plugin loader expects them.
 - `docs/security/` threat model and security posture for this system.
 - `docs/operations/` runbooks and incident records.
 - `docs/project/` current state, plans, handoffs. The long-running memory.
+  `docs/project/integrations.md`, if present, names external tooling this repo is wired
+  to; see `docs/engineering/integrations.md` for the policy.
 - `templates/` canonical document templates. Skills fill these in.

@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-08-29
+Last updated: 2026-08-30
 
 Replace this content the moment a real project starts. Right now it describes the system
 itself, which is the only honest thing it can say.
@@ -18,6 +18,7 @@ want to use it on.
 
 | Date | What | Evidence |
 | --- | --- | --- |
+| 2026-08-30 | Added external-tooling discovery: `/adopt` now interviews the adopter once (Jira/Linear, Confluence/Notion, Slack/Teams, external ADR tool, or "none — just git" as a hard stop), records intent in `docs/project/integrations.md` without touching credentials. New policy doc `docs/engineering/integrations.md` sets a repo-is-source-of-truth, CLI-before-MCP framework per tool, cross-referenced from `mcp.md`. | `skills/adopt/SKILL.md` step 3a, `docs/engineering/integrations.md`, `templates/integrations.md` |
 | 2026-08-29 | Added a `/guide` skill: reads `docs/project/STATE.md`, interviews the user in one short round, and routes them to the right skill instead of leaving them to read the lifecycle doc. Wired into `CLAUDE.md`'s routing table, `README.md`, `docs/GUIDE.md`, and `/adopt`'s final report. | `skills/guide/SKILL.md` |
 | 2026-08-20 | Fixed every blocking finding from the internal review pass: the `escalate` verdict, uninstall data loss, secret-scanner recall, and the `rm -rf` deny gaps. | Commit history |
 | 2026-08-20 | Packaged as a Claude Code plugin: two-command install, `/adopt` performs the setup instead of describing it, `install.sh` for the committed path. | `claude plugin details engineering-os` reports 14 skills, 4 agents, 2 hook events |
@@ -30,6 +31,9 @@ want to use it on.
 2. Decide whether the reviewer agents should run in CI on human pull requests.
 3. Revisit the `deny` and `ask` pattern lists once real usage shows what they miss and
    what they trip on wrongly.
+4. Run `/adopt` on a repo that actually has Jira/Confluence/Slack signals and confirm the
+   new step 3a interview and `docs/project/integrations.md` output work as designed —
+   untested against a real adopter yet.
 
 ## Blocked
 

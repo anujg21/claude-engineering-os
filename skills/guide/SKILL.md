@@ -73,6 +73,7 @@ source of truth, do not maintain a separate mental model of what each skill does
 | Something is broken in production, or a runbook is needed | `/operate` |
 | Lost context, resuming after a gap, or ending a session | `/project-state` |
 | Setting this system up in a repository for the first time | `/adopt` |
+| Which external tools (Jira, Confluence, Slack) this repo is wired to | `/adopt` already asked this; check `docs/project/integrations.md`, or rerun `/adopt` if it adopted before this existed |
 
 A one-line fix does not need the whole left column. Say so: point straight at
 `/implement` then `/review`, and name which phases are being skipped and why, the same

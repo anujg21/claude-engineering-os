@@ -1,5 +1,9 @@
 # MCP policy
 
+For which external tool a team should use at all, and whether the repo or the tool is
+the source of truth, see `docs/engineering/integrations.md`. This file is the mechanics
+of connecting once that's decided.
+
 Model Context Protocol servers give Claude tools that reach outside the repository:
 issue trackers, databases, monitoring, design tools, cloud APIs. Treat each one as a
 production integration with a credential attached, because that is what it is.
