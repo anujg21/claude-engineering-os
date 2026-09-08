@@ -88,8 +88,10 @@ failure behavior. The migration is expand and contract. Authorization is per res
 **Input** The design.
 **Output** `docs/project/plans/<feature>.md`.
 **Owner** `/plan`.
-**Validation** Every task names files and a check. The tree is green after every task. The
-riskiest work is first. Rollback and out-of-scope are written down.
+**Validation** Every task clears the definition-of-ready check (no placeholders, references
+resolve, check is runnable now, done-when is binary, dependencies named) and then names
+files and a check. The tree is green after every task. The riskiest work is first.
+Rollback and out-of-scope are written down.
 **Exit** The plan can be handed to a fresh session with no other context.
 
 ## Phase 7: Incremental implementation

@@ -42,6 +42,27 @@ Each task is:
 Put the riskiest unknown in the first two tasks. If the approach is wrong, you want to
 discover it on day one, not after eleven tasks of scaffolding.
 
+## Definition-of-ready check
+
+Before a drafted task goes into the plan, it clears five checks. Fail one, fix the task or
+send it back to the design — do not write a half-formed task into the plan and hope
+`/implement` sorts it out.
+
+1. **No placeholders.** No `TBD`, `TODO`, `???`, "figure out later" in the files, check, or
+   done-when columns.
+2. **References resolve.** Every named file, interface, or system either exists today or
+   is explicitly marked new. "The auth thing" fails; "`src/auth/session.ts`" passes.
+3. **Check is runnable now.** The verification command exists, or writing it is part of
+   this task's own scope — not "add tests later."
+4. **Done-when is binary.** One sentence a reviewer could confirm true or false without
+   asking the author what they meant.
+5. **Dependencies are named.** If the task needs another task or an external ticket first,
+   that dependency is stated, not assumed.
+
+This is a self-check on the way into the table, not a scored gate: no agent, no severity
+levels, no admission pipeline. If two or more tasks fail the same check, the design
+underneath is underspecified — stop and fix the design, not each task.
+
 ## Writing the plan
 
 Fill the template. It carries the task table, the verification command, the rollback
@@ -65,6 +86,7 @@ updates is worse than no plan, because people trust it.
 
 ## Exit criteria
 
+- Every task cleared the definition-of-ready check.
 - Every task names files and a check.
 - The tree is green after every task, at least in principle.
 - The riskiest work is early.
